@@ -27,18 +27,22 @@
             android:id="@+id/numberPicker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
             android:onProgressChanged="@{(picker, progress, fromUser) -> presenter.onProgressChanged(picker, progress, fromUser)}"
             android:onStopTrackingTouch="@{(picker) -> presenter.onStopTracking(picker)}"
             android:onStartTrackingTouch="@{(picker) -> presenter.onStartTracking(picker)}"
             android:progress="@{model.defaultValue}"
+            android:padding="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:picker_max="@{model.maxValue}"
-            app:picker_min="@{model.minValue}" />
+            app:picker_min="@{model.minValue}"
+            app:picker_numberFormat="@string/picker_number_format"
+            app:picker_orientation="vertical"/>
 
         <TextView
             android:id="@+id/textView"
@@ -65,7 +69,7 @@
             app:layout_constraintTop_toBottomOf="@+id/numberPicker"
             app:picker_editTextStyle="@style/NumberPicker.EditTextStyle.Disabled"
             app:picker_max="@{model.maxValue}"
-            app:picker_min="@{model.minValue}" />
+            app:picker_min="@{model.minValue}"/>
 
         <TextView
             android:id="@+id/textView2"

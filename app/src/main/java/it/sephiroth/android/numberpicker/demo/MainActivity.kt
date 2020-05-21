@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import it.sephiroth.android.library.numberpicker.NumberPicker
 import it.sephiroth.android.numberpicker.demo.databinding.ActivityMainBinding
@@ -40,6 +41,10 @@ class MainActivity : AppCompatActivity() {
 //                Timber.v("onStopTrackingTouch")
 //            }
 //        }
+
+        model.globalProgress.observe(this, Observer {
+            Timber.d("Global progress changed $it")
+        })
     }
 
     inner class Presenter {

@@ -58,6 +58,7 @@ class NumberPicker @JvmOverloads constructor(
     private lateinit var longGesture: UILongPressGestureRecognizer
     private lateinit var tapGesture: UITapGestureRecognizer
     private var disableGestures: Boolean = false
+    private var numberFormat: String = "%d"
 
     private var tooltip: Tooltip? = null
     private var maxDistance: Int
@@ -120,10 +121,11 @@ class NumberPicker @JvmOverloads constructor(
         // Timber.i("setProgress($value, $fromUser)")
         if (value != data.value) {
             data.value = value
-            tooltip?.update(data.value.toString())
+            val text = String.format(numberFormat, value)
+            tooltip?.update(text)
 
-            if (editText.text.toString() != data.value.toString())
-                editText.setText(data.value.toString())
+            if (editText.text.toString() != text)
+                editText.setText(text)
 
             numberPickerChangeListener?.onProgressChanged(this, progress, fromUser)
         }
@@ -158,7 +160,7 @@ class NumberPicker @JvmOverloads constructor(
         isFocusable = true
         isFocusableInTouchMode = true
 
-        orientation = HORIZONTAL
+        //orientation = HORIZONTAL
         gravity = Gravity.CENTER
 
         val array = context.theme.obtainStyledAttributes(attrs, R.styleable.NumberPicker, defStyleAttr, defStyleRes)
@@ -166,13 +168,15 @@ class NumberPicker @JvmOverloads constructor(
             val maxValue = array.getInteger(R.styleable.NumberPicker_picker_max, 100)
             val minValue = array.getInteger(R.styleable.NumberPicker_picker_min, 0)
             val stepSize = array.getInteger(R.styleable.NumberPicker_picker_stepSize, 1)
-            val orientation = array.getInteger(R.styleable.NumberPicker_picker_orientation, LinearLayout.VERTICAL)
+            val orientation = array.getInteger(R.styleable.NumberPicker_picker_orientation, VERTICAL)
             val value = array.getInteger(R.styleable.NumberPicker_android_progress, 0)
             arrowStyle = array.getResourceId(R.styleable.NumberPicker_picker_arrowStyle, 0)
             background = array.getDrawable(R.styleable.NumberPicker_android_background)
             editTextStyleId = array.getResourceId(R.styleable.NumberPicker_picker_editTextStyle, R.style.NumberPicker_EditTextStyle)
             tooltipStyleId = array.getResourceId(R.styleable.NumberPicker_picker_tooltipStyle, R.style.NumberPicker_ToolTipStyle)
             disableGestures = array.getBoolean(R.styleable.NumberPicker_picker_disableGestures, false)
+            numberFormat = array.getString(R.styleable.NumberPicker_picker_numberFormat) ?: "%d"
+
             maxDistance = context.resources.getDimensionPixelSize(R.dimen.picker_distance_max)
 
             data = Data(value, minValue, maxValue, stepSize, orientation)
@@ -233,18 +237,30 @@ class NumberPicker @JvmOverloads constructor(
         downButton.setBackgroundResource(R.drawable.arrow_up_background)
         downButton.rotation = if (data.orientation == VERTICAL) 180f else -90f
 
-        val params1 = LayoutParams(LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        params1.weight = 0f
+        if (orientation == HORIZONTAL){
+            val params1 = LayoutParams(LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            params1.weight = 0f
 
-        val params2 = LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT)
-        params2.weight = 1f
+            val params2 = LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT)
+            params2.weight = 1f
 
-        val params3 = LayoutParams(LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        params3.weight = 0f
+            val params3 = LayoutParams(LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            params3.weight = 0f
 
-        addView(downButton, params3)
-        addView(editText, params2)
-        addView(upButton, params1)
+            addView(downButton, params3)
+            addView(editText, params2)
+            addView(upButton, params1)
+        }
+        else {
+            val params1 = LayoutParams(LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+
+            val params2 = LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+
+            val params3 = LayoutParams(LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            addView(upButton, params1)
+            addView(editText, params2)
+            addView(downButton, params3)
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")

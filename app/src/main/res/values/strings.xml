@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Number Picker</string>
+    <string name="picker_number_format">%02d</string>
 </resources>
