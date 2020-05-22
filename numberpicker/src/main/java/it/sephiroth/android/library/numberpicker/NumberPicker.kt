@@ -191,7 +191,7 @@ class NumberPicker @JvmOverloads constructor(
             }
             inflateChildren()
 
-            editText.setText(data.value.toString())
+            editText.setText(String.format(numberFormat, data.value))
 
 
         } finally {
@@ -361,7 +361,7 @@ class NumberPicker @JvmOverloads constructor(
                 if (!editText.text.isNullOrEmpty()) {
                     setProgress(Integer.valueOf(editText.text.toString()), true)
                 } else {
-                    editText.setText(data.value.toString())
+                    editText.setText(String.format(numberFormat, data.value))
                 }
             }
         }
