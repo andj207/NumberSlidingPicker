@@ -427,7 +427,7 @@ class NumberPicker @JvmOverloads constructor(
         }
 
         tooltip?.doOnShown { it.update(data.value.toString()) }
-        tooltip?.show(this, if (data.orientation == VERTICAL) Tooltip.Gravity.LEFT else Tooltip.Gravity.TOP, false)
+        tooltip?.show(this, if (data.orientation == VERTICAL) Tooltip.Gravity.LEFT else Tooltip.Gravity.TOP, true)
 
         numberPickerChangeListener?.onStartTrackingTouch(this)
 
