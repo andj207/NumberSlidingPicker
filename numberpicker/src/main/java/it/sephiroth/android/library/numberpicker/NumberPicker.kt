@@ -119,7 +119,7 @@ class NumberPicker @JvmOverloads constructor(
     @Suppress("MemberVisibilityCanBePrivate")
     fun setProgress(value: Int, fromUser: Boolean = true) {
         // Timber.i("setProgress($value, $fromUser)")
-        if (value != data.value) {
+        if (value != data.value && value <= maxValue && value >= minValue) {
             data.value = value
             val text = String.format(numberFormat, value)
             tooltip?.update(text)
