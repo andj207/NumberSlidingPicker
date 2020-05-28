@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.ColorInt
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.appcompat.widget.AppCompatImageButton
 import io.reactivex.Observable
@@ -130,6 +131,10 @@ class NumberPicker @JvmOverloads constructor(
 
             numberPickerChangeListener?.onProgressChanged(this, progress, fromUser)
         }
+    }
+
+    fun setTextColor(@ColorInt color: Int){
+        editText.setTextColor(color)
     }
 
     var progress: Int
