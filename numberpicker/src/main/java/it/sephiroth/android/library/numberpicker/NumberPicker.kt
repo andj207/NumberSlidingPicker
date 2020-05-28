@@ -137,6 +137,10 @@ class NumberPicker @JvmOverloads constructor(
         editText.setTextColor(color)
     }
 
+    fun getTextColor(): Int {
+        return editText.currentTextColor
+    }
+
     var progress: Int
         get() = data.value
         set(value) = setProgress(value, false)
