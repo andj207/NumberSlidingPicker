@@ -134,7 +134,9 @@ class NumberPicker @JvmOverloads constructor(
     }
 
     fun setTextColor(@ColorInt color: Int){
-        editText.setTextColor(color)
+        if (getTextColor() != color){
+            editText.setTextColor(color)
+        }
     }
 
     fun getTextColor(): Int {
